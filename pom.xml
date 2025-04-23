@@ -5,14 +5,14 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.example</groupId>
-    <artifactId>html-app</artifactId>
+    <artifactId>inpage</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>war</packaging>
 
     <name>Simple HTML App</name>
 
     <build>
-        <finalName>html-app</finalName>
+        <finalName>inpage</finalName>
         <plugins>
             <!-- Plugin to compile and package WAR -->
             <plugin>

@@ -25,6 +25,8 @@ steps:
     effectivePomSkip: false
     sonarQubeRunAnalysis: false
 
+- script: pwd ; ls -lrth
+
 
 - script: |
     echo Add other tasks to build, test, and deploy your project.

@@ -26,7 +26,7 @@ steps:
     sonarQubeRunAnalysis: false
 - task: CopyFiles@2
   inputs:
-    Contents: '/home/VM/myagent/_work/2/s/target/inpage.war'
+    Contents: '$(agent.builddirectory)/target/inpage.war'
     TargetFolder: '$(build.artifactstagingdirectory)'
 - task: PublishBuildArtifacts@1
   inputs:

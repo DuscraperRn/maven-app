@@ -44,7 +44,7 @@ stages:
         displayName: 'Publish artifact for release.'
         inputs:
           PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-          ArtifactName: 'Application.war'
+          ArtifactName: 'Application'
           publishLocation: 'Container'
           
       - script: pwd ; ls -lrth ; echo "$(agent.builddirectory)"

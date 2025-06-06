@@ -4,7 +4,9 @@
 # https://aka.ms/yaml
 
 trigger:
-- master
+ branches:
+   include:
+     - master
 
 variables:
   user: 'Mritunjay'
@@ -13,34 +15,38 @@ variables:
 pool:
   name: Default
 
-steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
+stages:
+  - stage: 'Stage1'
+    jobs:
+    - job: 'StartingJob' 
+      steps:
+      - script: echo Hello, world!
+        displayName: 'Run a one-line script'
+      - task: Maven@4
+        inputs:
+          azureSubscription: 'Pay-As-You-Go(bc1634d1-f1d7-42b1-a042-506cc293a5c8)'
+          mavenPomFile: 'pom.xml'
+          publishJUnitResults: true
+          testResultsFiles: '**/surefire-reports/TEST-*.xml'
+          javaHomeOption: 'JDKVersion'
+          mavenVersionOption: 'Default'
+          mavenAuthenticateFeed: false
+          effectivePomSkip: false
+          sonarQubeRunAnalysis: false
+      - task: CopyFiles@2
+        inputs:
+          Contents: '$(agent.builddirectory)/target/inpage.war'
+          TargetFolder: '$(build.artifactstagingdirectory)'
 
-- task: Maven@4
-  inputs:
-    azureSubscription: 'Pay-As-You-Go(bc1634d1-f1d7-42b1-a042-506cc293a5c8)'
-    mavenPomFile: 'pom.xml'
-    publishJUnitResults: true
-    testResultsFiles: '**/surefire-reports/TEST-*.xml'
-    javaHomeOption: 'JDKVersion'
-    mavenVersionOption: 'Default'
-    mavenAuthenticateFeed: false
-    effectivePomSkip: false
-    sonarQubeRunAnalysis: false
-- task: CopyFiles@2
-  inputs:
-    Contents: '$(agent.builddirectory)/target/inpage.war'
-    TargetFolder: '$(build.artifactstagingdirectory)'
-- task: PublishBuildArtifacts@1
-  inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-    ArtifactName: 'Application.war'
-    publishLocation: 'Container'
+      - task: PublishBuildArtifacts@1
+        inputs:
+          PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+          ArtifactName: 'Application.war'
+          publishLocation: 'Container'
+          
+      - script: pwd ; ls -lrth ; echo "$(agent.builddirectory)"
 
-- script: pwd ; ls -lrth ; echo "$(agent.builddirectory)"
-
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+      - script: |
+          echo Add other tasks to build, test, and deploy your project.
+          echo See https://aka.ms/yaml
+        displayName: 'Run a multi-line script'

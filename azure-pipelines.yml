@@ -35,7 +35,7 @@ stages:
           sonarQubeRunAnalysis: false
       - task: CopyFiles@2
         inputs:
-          Contents: '$(agent.builddirectory)/target/inpage.war'
+          Contents: '$(agent.builddirectory)/s/target/inpage.war'
           TargetFolder: '$(build.artifactstagingdirectory)'
 
       - task: PublishBuildArtifacts@1
@@ -45,7 +45,7 @@ stages:
           publishLocation: 'Container'
           
       - script: pwd ; ls -lrth ; echo "$(agent.builddirectory)"
-
+      - script: 'echo "I am $(user).\n Current release: $(release)"'
       - script: |
           echo Add other tasks to build, test, and deploy your project.
           echo See https://aka.ms/yaml

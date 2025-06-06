@@ -6,6 +6,10 @@
 trigger:
 - master
 
+variables:
+  user: 'Mritunjay'
+  release: 'Jun2025'
+
 pool:
   name: Default
 

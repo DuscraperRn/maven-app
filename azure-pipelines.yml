@@ -56,3 +56,7 @@ stages:
           echo See https://aka.ms/yaml
           touch /tmp/report.txt
         displayName: 'Run a multi-line script'
+      - script: |
+          echo 'Hello world'
+          echo 'Ashish'
+        displayName: 'Ashish stage'

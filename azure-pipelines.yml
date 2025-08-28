@@ -14,7 +14,8 @@ variables:
   azureKeyVaultName: 'secret1980'
 
 pool:
-  name: Default
+  #name: Default
+  vmImage: 'ubuntu-latest'
 
 stages:
   - stage: 'Stage1'

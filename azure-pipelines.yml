@@ -11,6 +11,7 @@ trigger:
 variables:
   user: 'Mritunjay'
   release: 'Jun2025'
+  azureKeyVaultName: 'secret1980'
 
 pool:
   name: Default
@@ -22,6 +23,15 @@ stages:
       steps:
       - script: echo Hello, world!
         displayName: 'Run a one-line script'
+      - task: AzureKeyVault@2
+        inputs:
+          azureSubscription: 'Pay-As-You-Go(bc1634d1-f1d7-42b1-a042-506cc293a5c8)'
+          KeyVaultName: 'secret1980'
+          SecretsFilter: 'ServerPassword'
+          RunAsPreJob: false
+      - script: |
+          SCP_PASS=$(ServerPassword)
+          echo $SCP_PASS
       - task: Maven@4
         displayName: 'Maven Build'
         inputs:

@@ -16,9 +16,4 @@ stages:
       steps:
       - script: uptime
         displayName: 'DispStage1'
-  - stage: 'Stage2'
-    jobs:
-      - job: 'Job2'
-        steps:
-        - script: hostname
-          displayName: 'DispStage2'
+      - script: echo $V1

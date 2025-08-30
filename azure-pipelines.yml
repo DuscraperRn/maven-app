@@ -1,73 +1,24 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
-
 trigger:
  branches:
    include:
      - master
 
 variables:
-  user: 'Mritunjay'
-  release: 'Jun2025'
-  azureKeyVaultName: 'secret1980'
+  user: 'MJ'
 
 pool:
-  #name: Default
   vmImage: 'ubuntu-latest'
 
 stages:
   - stage: 'Stage1'
     jobs:
-    - job: 'StartingJob' 
+    - job: 'Job1'
       steps:
-      - script: echo Hello, world!
-        displayName: 'Run a one-line script'
-      - task: AzureKeyVault@2
-        inputs:
-          azureSubscription: 'Pay-As-You-Go(bc1634d1-f1d7-42b1-a042-506cc293a5c8)'
-          KeyVaultName: 'secret1980'
-          SecretsFilter: 'ServerPassword'
-          RunAsPreJob: false
-      - script: |
-          SCP_PASS=$(ServerPassword)
-          echo $SCP_PASS
-      - task: Maven@4
-        displayName: 'Maven Build'
-        inputs:
-          azureSubscription: 'Pay-As-You-Go(bc1634d1-f1d7-42b1-a042-506cc293a5c8)'
-          mavenPomFile: 'pom.xml'
-          publishJUnitResults: true
-          testResultsFiles: '**/surefire-reports/TEST-*.xml'
-          javaHomeOption: 'JDKVersion'
-          mavenVersionOption: 'Default'
-          mavenAuthenticateFeed: false
-          effectivePomSkip: false
-          sonarQubeRunAnalysis: false
-      - task: CopyFiles@2
-        displayName: 'Moving artifact to artifactory.'
-        inputs:
-          Contents: '$(agent.builddirectory)/s/target/inpage.war'
-          TargetFolder: '$(build.artifactstagingdirectory)'
-
-      - task: PublishBuildArtifacts@1
-        displayName: 'Publish artifact for release.'
-        inputs:
-          PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-          ArtifactName: 'Application'
-          publishLocation: 'Container'
-          
-      - script: pwd ; ls -lrth ; echo "$(agent.builddirectory)"
-        displayName: 'Path check'
-      - script: 'echo "I am $(user).\n Current release: $(release)"'
-        displayName: 'Variable check'
-      - script: |
-          echo Add other tasks to build, test, and deploy your project.
-          echo See https://aka.ms/yaml
-          touch /tmp/report.txt
-        displayName: 'Run a multi-line script'
-      - script: |
-          echo 'Hello world'
-          echo 'Ashish'
-        displayName: 'Ashish stage'
+      - script: uptime
+        displayName: 'DispStage1'
+  - stage: 'Stage2'
+    jobs:
+      - job: 'Job2'
+        steps:
+        - script: hostname
+          displayName: 'DispStage2'
